@@ -22,16 +22,14 @@ func init() {
 	redisCli = rdb
 }
 
-func TestRedis(t *testing.T) {
+func TestRedisConnect(t *testing.T) {
 	err := redisCli.Set(context.Background(), "aaa", "11wa2243", 0).Err()
-	if err != nil {
-		fmt.Println("sb", err)
-	}
+	assert.False(t, err != nil)
 	res, err := redisCli.Get(context.Background(), "aaa").Result()
-	if err != nil {
-		fmt.Println("sb", err)
-	}
-	fmt.Println(res)
+	assert.False(t, err != nil)
+	assert.Equal(t, res, "11wa2243")
+	err = redisCli.Del(context.Background(), "aaa").Err()
+	assert.False(t, err != nil)
 }
 
 // TestRegister Test the Registry in registry.go
